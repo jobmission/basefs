@@ -42,8 +42,8 @@ controllerManager:
       name: localtime
       pathType: File
       readOnly: true
-dns:
-  type: ""
+  #dns:
+  #  type: ""
   #imageRepository: sea.hub:5000/coredns
 etcd:
   local:
@@ -193,7 +193,7 @@ nodePortAddresses: null
 oomScoreAdj: null
 portRange: ""
 showHiddenMetricsForVersion: ""
-udpIdleTimeout: 0s
+#udpIdleTimeout: 0s
 winkernel:
   enableDSR: false
   networkName: ""

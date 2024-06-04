@@ -46,9 +46,9 @@ controllerManager:
     name: localtime
     pathType: File
     readOnly: true
-dns:
-  type: ""
-  #imageRepository: {{or .RegistryURL "sea.hub:5000"}}/coredns
+#dns:
+#  type: ""
+#  #imageRepository: {{or .RegistryURL "sea.hub:5000"}}/coredns
 etcd:
   local:
     dataDir: ""
@@ -187,7 +187,7 @@ nodePortAddresses: null
 oomScoreAdj: null
 portRange: ""
 showHiddenMetricsForVersion: ""
-udpIdleTimeout: 0s
+#udpIdleTimeout: 0s
 winkernel:
   enableDSR: false
   networkName: ""
