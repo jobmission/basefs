@@ -17,8 +17,8 @@ jobs:
         run: |
           commentbody="${{github.event.comment.body}}"
           commentbody=$(echo $commentbody | sed "s/\/imagebuild//g")
-          REPOSITORY_OWNER=${{secrets.REPOSITORY_OWNER}}
-          echo "REPOSITORY_OWNER: $REPOSITORY_OWNER, ${{github.repositoryUrl}}"
+          REPOSITORY_OWNER=${{github.repository_owner}}
+          echo "env run_profile: ${{ env.run_profile }}, REPOSITORY_OWNER: $REPOSITORY_OWNER, ${{github.repositoryUrl}}"
           sudo git clone ${{github.repositoryUrl}} && cd basefs
           sudo touch autobuild.log && sudo chmod 666 autobuild.log && sudo bash auto-build.sh --username="${{secrets.REGISTRY_USERNAME}}" --password="${{secrets.REGISTRY_PASSWORD}}" $commentbody > autobuild.log && cat autobuild.log
           echo "::set-output name=info::$(grep 'cri:' autobuild.log))"
