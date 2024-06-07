@@ -114,4 +114,5 @@ if [[ "$push" == "true" ]]; then
   echo "push name: docker.io/$username/kubernetes:${k8s_version}"
   sudo sealer push "docker.io/$username/kubernetes:${k8s_version}"
   sudo sealer images
+  sudo sealer inspect "docker.io/$username/kubernetes:${k8s_version}"
 fi
