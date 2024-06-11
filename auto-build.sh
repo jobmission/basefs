@@ -63,6 +63,7 @@ for i in "$@"; do
   esac
 done
 
+echo "This is auto-build.sh"
 version_compare() { printf '%s\n%s\n' "$2" "$1" | sort -V -C; } ## version_compare $a $b:  a>=b
 
 ARCH=$(case "$(uname -m)" in x86_64) echo -n amd64 ;; aarch64) echo -n arm64 ;; *) echo "unsupported architecture" "$(uname -m)" && exit 1 ;; esac)
