@@ -125,3 +125,5 @@ for i in "kubeadm" "kubectl" "kubelet"; do
   sudo curl -L "https://dl.k8s.io/release/${kube_install_version}/bin/linux/amd64/${i}" -o "amd64/bin/${i}"
   sudo curl -L "https://dl.k8s.io/release/${kube_install_version}/bin/linux/arm64/${i}" -o "arm64/bin/${i}"
 done
+
+echo "ls -la"
