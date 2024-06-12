@@ -15,7 +15,7 @@ export nerdctl_version=${nerdctl_version:-"0.19.0"}
 
 export crictl_version=${crictl_version:-"1.24.1"}
 
-export containerd_version=${containerd_version:-"v1.7.14"}
+export containerd_version=${containerd_version:-"1.7.18"}
 
 export seautil_version=${seautil_version:-"0.9.1"}
 
