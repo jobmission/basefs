@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+echo "auto-build.sh parse input parameter ..."
 
 for i in "$@"; do
   case $i in
@@ -28,11 +29,11 @@ for i in "$@"; do
     password="${i#*=}"
     shift # past argument=value
     ;;
-  -ns=* | --dockerNamespace=*)
+  -s=* | --dockerNamespace=*)
     dockerNamespace="${i#*=}"
     shift # past argument=value
     ;;
-  -dr=* | --dockerRegistry=*)
+  -r=* | --dockerRegistry=*)
     dockerRegistry="${i#*=}"
     shift # past argument=value
     ;;
