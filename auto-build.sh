@@ -29,13 +29,13 @@ for i in "$@"; do
     shift # past argument=value
     ;;
   -ns=* | --namespace=*)
-      namespace="${i#*=}"
-      shift # past argument=value
-      ;;
+    namespace="${i#*=}"
+    shift # past argument=value
+    ;;
   -dr=* | --docker-registry=*)
-        dockerRegistry="${i#*=}"
-        shift # past argument=value
-        ;;
+    dockerRegistry="${i#*=}"
+    shift # past argument=value
+    ;;
   -u=* | --username=*)
     username="${i#*=}"
     shift # past argument=value

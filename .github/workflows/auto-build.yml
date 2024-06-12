@@ -21,7 +21,8 @@ jobs:
           REPOSITORY_HTTP_URL="${{github.server_url}}/${{github.repository}}"
           echo "variable RUN_PROFILE: ${{ vars.RUN_PROFILE }}, secret MY_SECRET: ${{secrets.MY_SECRET}}, $REPOSITORY_HTTP_URL"
           sudo git clone $REPOSITORY_HTTP_URL && cd basefs
-          sudo touch autobuild.log && sudo chmod 666 autobuild.log && sudo bash auto-build.sh --username="${{secrets.REGISTRY_USERNAME}}" --password="${{secrets.REGISTRY_PASSWORD}}" --namespace="${{secrets.NAMESPACE}}" $commentbody > autobuild.log && cat autobuild.log
+          echo "clone source code complete."
+          sudo touch autobuild.log && sudo chmod 666 autobuild.log && sudo bash auto-build.sh --username="${{secrets.REGISTRY_USERNAME}}" --password="${{secrets.REGISTRY_PASSWORD}}" --namespace="${{secrets.NAMESPACE}}" --docker-registry="${{secrets.NAMESPACE}}" $commentbody > autobuild.log && cat autobuild.log
           echo "::set-output name=info::$(grep 'cri:' autobuild.log)"
 
       - name: Success Commit
