@@ -29,12 +29,12 @@ for i in "$@"; do
     password="${i#*=}"
     shift # past argument=value
     ;;
-  --dockerNamespace=*)
-    dockerNamespace="${i#*=}"
+  --docker-namespace=*)
+    docker_namespace="${i#*=}"
     shift # past argument=value
     ;;
-  --dockerRegistry=*)
-    dockerRegistry="${i#*=}"
+  --docker-registry=*)
+    docker_registry="${i#*=}"
     shift # past argument=value
     ;;
   -u=* | --username=*)
@@ -77,8 +77,8 @@ version_compare() { printf '%s\n%s\n' "$2" "$1" | sort -V -C; } ## version_compa
 
 ARCH=$(case "$(uname -m)" in x86_64) echo -n amd64 ;; aarch64) echo -n arm64 ;; *) echo "unsupported architecture" "$(uname -m)" && exit 1 ;; esac)
 
-if [[ -z "$dockerNamespace" ]]; then
-  dockerNamespace="markwzhang"
+if [[ -z "$docker_namespace" ]]; then
+  docker_namespace="markwzhang"
 fi
 
 if [[ -z "$dockerRegistry" ]]; then
@@ -89,7 +89,7 @@ if [ "$k8s_version" = "" ]; then echo "pls use --k8s-version to set Clusterimage
 cri=$([[ -n "$cri" ]] && echo "$cri" || echo "containerd")
 #cri=$( (version_compare "$k8s_version" "v1.24.0" && echo "containerd") || ([[ -n "$cri" ]] && echo "$cri" || echo "docker"))
 if [[ -z "$buildName" ]]; then
-  buildName="${dockerRegistry}/${dockerNamespace}/kubernetes:${k8s_version}"
+  buildName="${dockerRegistry}/${$docker_namespace}/kubernetes:${k8s_version}"
   if [[ "$cri" == "containerd" ]] && ! version_compare "$k8s_version" "v1.24.0"; then buildName=${buildName}-containerd; fi
 fi
 platform=$(if [[ -z "$platform" ]]; then echo "linux/arm64,linux/amd64"; else echo "$platform"; fi)
@@ -128,7 +128,7 @@ sudo sealer build -t "$buildName" -f Kubefile
 if [[ "$push" == "true" ]]; then
   echo "hub username: $username"
   if [[ -n "$username" ]] && [[ -n "$password" ]]; then
-    sudo sealer login "$(echo "$dockerRegistry" | cut -d "/" -f1)" -u "${username}" -p "${password}"
+    sudo sealer login "$(echo "$docker_registry" | cut -d "/" -f1)" -u "${username}" -p "${password}"
   fi
   echo "push name: $buildName"
   sudo sealer push "$buildName"
