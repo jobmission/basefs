@@ -28,8 +28,8 @@ for i in "$@"; do
     password="${i#*=}"
     shift # past argument=value
     ;;
-  -ns=* | --namespace=*)
-    namespace="${i#*=}"
+  -ns=* | --dockerNamespace=*)
+    dockerNamespace="${i#*=}"
     shift # past argument=value
     ;;
   -dr=* | --dockerRegistry=*)
@@ -76,8 +76,8 @@ version_compare() { printf '%s\n%s\n' "$2" "$1" | sort -V -C; } ## version_compa
 
 ARCH=$(case "$(uname -m)" in x86_64) echo -n amd64 ;; aarch64) echo -n arm64 ;; *) echo "unsupported architecture" "$(uname -m)" && exit 1 ;; esac)
 
-if [[ -z "$namespace" ]]; then
-  namespace="markwzhang"
+if [[ -z "$dockerNamespace" ]]; then
+  dockerNamespace="markwzhang"
 fi
 
 if [[ -z "$dockerRegistry" ]]; then
@@ -88,7 +88,7 @@ if [ "$k8s_version" = "" ]; then echo "pls use --k8s-version to set Clusterimage
 cri=$([[ -n "$cri" ]] && echo "$cri" || echo "containerd")
 #cri=$( (version_compare "$k8s_version" "v1.24.0" && echo "containerd") || ([[ -n "$cri" ]] && echo "$cri" || echo "docker"))
 if [[ -z "$buildName" ]]; then
-  buildName="${dockerRegistry}/${namespace}/kubernetes:${k8s_version}"
+  buildName="${dockerRegistry}/${dockerNamespace}/kubernetes:${k8s_version}"
   if [[ "$cri" == "containerd" ]] && ! version_compare "$k8s_version" "v1.24.0"; then buildName=${buildName}-containerd; fi
 fi
 platform=$(if [[ -z "$platform" ]]; then echo "linux/arm64,linux/amd64"; else echo "$platform"; fi)
