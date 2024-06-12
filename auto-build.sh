@@ -129,6 +129,7 @@ if [ -f "rootfs/etc/dump-config.toml" ]; then sudo sed -i "s/sea.hub:5000\/pause
 echo "before build workdir: ${workdir}/context/rootfs/scripts"
 echo "$(ls -l rootfs/scripts)"
 
+echo "$(sealer version)}"
 echo "build name: $buildName"
 sudo sealer build -t "$buildName" -f Kubefile
 if [[ "$push" == "true" ]]; then
