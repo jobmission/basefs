@@ -32,6 +32,10 @@ for i in "$@"; do
       namespace="${i#*=}"
       shift # past argument=value
       ;;
+  -dr=* | --docker-registry=*)
+        dockerRegistry="${i#*=}"
+        shift # past argument=value
+        ;;
   -u=* | --username=*)
     username="${i#*=}"
     shift # past argument=value
@@ -76,11 +80,15 @@ if [[ -z "$namespace" ]]; then
   namespace="markwzhang"
 fi
 
+if [[ -z "$dockerRegistry" ]]; then
+  dockerRegistry="docker.io"
+fi
+
 if [ "$k8s_version" = "" ]; then echo "pls use --k8s-version to set Clusterimage kubernetes version" && exit 1; else echo "$k8s_version" | grep "v" || k8s_version="v${k8s_version}"; fi
 cri=$([[ -n "$cri" ]] && echo "$cri" || echo "containerd")
 #cri=$( (version_compare "$k8s_version" "v1.24.0" && echo "containerd") || ([[ -n "$cri" ]] && echo "$cri" || echo "docker"))
 if [[ -z "$buildName" ]]; then
-  buildName="docker.io/${namespace}/kubernetes:${k8s_version}"
+  buildName="${dockerRegistry}/${namespace}/kubernetes:${k8s_version}"
   if [[ "$cri" == "containerd" ]] && ! version_compare "$k8s_version" "v1.24.0"; then buildName=${buildName}-containerd; fi
 fi
 platform=$(if [[ -z "$platform" ]]; then echo "linux/arm64,linux/amd64"; else echo "$platform"; fi)
@@ -119,7 +127,7 @@ sudo sealer build -t "$buildName" -f Kubefile
 if [[ "$push" == "true" ]]; then
   echo "hub username: $username"
   if [[ -n "$username" ]] && [[ -n "$password" ]]; then
-    sudo sealer login "$(echo "docker.io" | cut -d "/" -f1)" -u "${username}" -p "${password}"
+    sudo sealer login "$(echo "$dockerRegistry" | cut -d "/" -f1)" -u "${username}" -p "${password}"
   fi
   echo "push name: $buildName"
   sudo sealer push "$buildName"
