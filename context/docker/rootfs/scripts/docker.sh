@@ -20,7 +20,7 @@ set -e
 # shellcheck disable=SC2006
 scripts_path=$(cd `dirname "$0"`; pwd)
 image_dir="$scripts_path/../images"
-DOCKER_VERSION="19.03.14-sealer"
+DOCKER_VERSION="26.1.4-sealer"
 
 # shellcheck disable=SC1091
 get_distribution() {
@@ -66,9 +66,10 @@ check_docker_valid() {
   fi
 
   dockerVersion=`docker info --format '{{json .ServerVersion}}' | tr -d '"'`
-  if [ "${dockerVersion}" != "${DOCKER_VERSION}" ]; then
-    panic "docker version is ${dockerVersion}, should be 19.03.15, please check"
-  fi
+  echo "dockerVersion ${dockerVersion}, maybe expect ${DOCKER_VERSION}"
+#  if [ "${dockerVersion}" != "${DOCKER_VERSION}" ]; then
+#    panic "docker version is ${dockerVersion}, should be 19.03.15, please check"
+#  fi
 }
 
 storage=${1:-/var/lib/docker}

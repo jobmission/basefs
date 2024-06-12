@@ -28,6 +28,10 @@ if [ "${cri}" = "containerd" ] && ! checkEnvExist containerd_version; then
   die "Please set environment 'containerd_version'"
 fi
 
+if [ "${cri}" = "docker" ] && ! checkEnvExist docker_version; then
+  die "Please set environment 'docker_version'"
+fi
+
 gperf_url="https://ftp.gnu.org/gnu/gperf"
 gperf_tarball="gperf-${gperf_version:-}.tar.gz"
 gperf_tarball_url="${gperf_url}/${gperf_tarball}"
@@ -59,8 +63,7 @@ install_url="https://sealer.oss-cn-beijing.aliyuncs.com/auto-build"
 ##https://github.com/osemp/moby/releases/download/v19.03.14/docker-amd64.tar.gz
 ##registry ${ARCH} image: ghcr.io/osemp/distribution-amd64/distribution:latest
 if [ "${cri}" = "docker" ]; then
-  docker_version="19.03.14"
-  docker_url="https://github.com/osemp/moby"
+  docker_url="https://github.com/moby/moby"
   cri_tarball_amd64="docker-amd64.tar.gz"
   cri_tarball_arm64="docker-arm64.tar.gz"
   cri_tarball_amd64_url="${docker_url}/releases/download/v${docker_version}/${cri_tarball_amd64}"
