@@ -32,7 +32,7 @@ for i in "$@"; do
     namespace="${i#*=}"
     shift # past argument=value
     ;;
-  -dr=* | --docker-registry=*)
+  -dr=* | --dockerRegistry=*)
     dockerRegistry="${i#*=}"
     shift # past argument=value
     ;;
