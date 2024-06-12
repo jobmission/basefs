@@ -9,13 +9,13 @@ export libseccomp_version=${libseccomp_version:-"2.5.4"}
 
 export gperf_version=${gperf_version:-"3.1"}
 
-export conntrack_version=${conntrack_version:-"v1.7.18"}
+export conntrack_version=${conntrack_version:-"1.4.4"}
 
 export nerdctl_version=${nerdctl_version:-"0.19.0"}
 
 export crictl_version=${crictl_version:-"1.24.1"}
 
-export containerd_version=${containerd_version:-"1.6.12"}
+export containerd_version=${containerd_version:-"v1.7.18"}
 
 export seautil_version=${seautil_version:-"0.9.1"}
 
