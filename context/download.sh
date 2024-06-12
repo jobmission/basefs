@@ -111,7 +111,7 @@ echo "download seautil version ${seautil_version}"
 wget -q "${seautil_tarball_amd64_url}" && tar zxvf "${seautil_tarball_amd64}" -C "amd64/bin"
 wget -q "${seautil_tarball_arm64_url}" && tar zxvf "${seautil_tarball_arm64}" -C "arm64/bin"
 
-echo "download cri with ${cri}"
+echo "download cri with ${cri} : ${cri_tarball_amd64_url}"
 wget -q "${cri_tarball_amd64_url}" && mv "${cri_tarball_amd64}" "amd64/cri/docker.tar.gz"
 wget -q "${cri_tarball_arm64_url}" && mv "${cri_tarball_arm64}" "arm64/cri/docker.tar.gz"
 
