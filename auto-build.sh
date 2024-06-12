@@ -100,7 +100,7 @@ kubeadmApiVersion=$( (version_compare "$k8s_version" "v1.23.0" && echo 'kubeadm.
 
 workdir="$(mktemp -d auto-build-XXXXX)" && sudo cp -r context "${workdir}" && cd "${workdir}/context" && sudo cp -rf "${cri}"/* .
 
-echo "workdir: ${workdir}/context/rootfs/scripts"
+echo "after make workdir: ${workdir}/context/rootfs/scripts"
 echo "$(ls -l rootfs/scripts)"
 
 # shellcheck disable=SC1091
@@ -125,6 +125,9 @@ if [ "$(sudo ./"${ARCH}"/bin/kubeadm config images list --config rootfs/etc/kube
 sudo sed -i "s/registry.k8s.io/sea.hub:5000/g" rootfs/etc/kubeadm.yml.tmpl
 pauseImage=$(./"${ARCH}"/bin/kubeadm config images list --config "rootfs/etc/kubeadm.yml" 2>/dev/null | sed "/WARNING/d" | grep pause)
 if [ -f "rootfs/etc/dump-config.toml" ]; then sudo sed -i "s/sea.hub:5000\/pause:3.6/$(echo "$pauseImage" | sed 's/\//\\\//g')/g" rootfs/etc/dump-config.toml; fi
+
+echo "before build workdir: ${workdir}/context/rootfs/scripts"
+echo "$(ls -l rootfs/scripts)"
 
 echo "build name: $buildName"
 sudo sealer build -t "$buildName" -f Kubefile
