@@ -29,11 +29,11 @@ for i in "$@"; do
     password="${i#*=}"
     shift # past argument=value
     ;;
-  -s=* | --dockerNamespace=*)
+  --dockerNamespace=*)
     dockerNamespace="${i#*=}"
     shift # past argument=value
     ;;
-  -r=* | --dockerRegistry=*)
+  --dockerRegistry=*)
     dockerRegistry="${i#*=}"
     shift # past argument=value
     ;;
