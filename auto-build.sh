@@ -80,7 +80,7 @@ if [ "$k8s_version" = "" ]; then echo "pls use --k8s-version to set Clusterimage
 cri=$([[ -n "$cri" ]] && echo "$cri" || echo "containerd")
 #cri=$( (version_compare "$k8s_version" "v1.24.0" && echo "containerd") || ([[ -n "$cri" ]] && echo "$cri" || echo "docker"))
 if [[ -z "$buildName" ]]; then
-  buildName="docker.io/markwzhang/kubernetes:${k8s_version}-hack"
+  buildName="docker.io/${namespace}/kubernetes:${k8s_version}"
   if [[ "$cri" == "containerd" ]] && ! version_compare "$k8s_version" "v1.24.0"; then buildName=${buildName}-containerd; fi
 fi
 platform=$(if [[ -z "$platform" ]]; then echo "linux/arm64,linux/amd64"; else echo "$platform"; fi)
