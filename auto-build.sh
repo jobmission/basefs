@@ -100,6 +100,9 @@ kubeadmApiVersion=$( (version_compare "$k8s_version" "v1.23.0" && echo 'kubeadm.
 
 workdir="$(mktemp -d auto-build-XXXXX)" && sudo cp -r context "${workdir}" && cd "${workdir}/context" && sudo cp -rf "${cri}"/* .
 
+echo "workdir: ${workdir}/context"
+echo "$(ls -l .)"
+
 # shellcheck disable=SC1091
 echo "run download.sh"
 sudo chmod +x version.sh download.sh && export kube_install_version="$k8s_version" && source version.sh
