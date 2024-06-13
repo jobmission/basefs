@@ -59,8 +59,8 @@ check_registry() {
     n=1
     while (( n <= 3 ))
     do
-        registry_status=$(ctr container info --format '{{json .State.Status}}' sealer-registry)
-        if [[ "$registry_status" == \"running\" ]]; then
+        registry_status=$(ctr tasks ls | grep $container | awk '{print $3}')
+        if [[ "$registry_status" == "RUNNING" ]]; then
             break
         fi
         if [[ $n -eq 3 ]]; then
@@ -76,34 +76,34 @@ load_images
 
 ## rm container if exist.
 if [ "$(ctr task ls -q name=$container)" ]; then
-    ctr container rm -f $container
+    ctr tasks kill -s KILL $container
+    ctr containers delete $container
 fi
 
-regArgs="-d --restart=always \
---net=host \
---name $container \
--v $certs_dir:/certs \
--v $VOLUME:/var/lib/registry \
--e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/$REGISTRY_DOMAIN.crt \
--e REGISTRY_HTTP_TLS_KEY=/certs/$REGISTRY_DOMAIN.key \
--e REGISTRY_HTTP_DEBUG_ADDR=0.0.0.0:5002 \
--e REGISTRY_HTTP_DEBUG_PROMETHEUS_ENABLED=true"
+regArgs="--detach
+         --mount type=bind,src=$certs_dir,dst=/certs,options=rbind:rw \
+         --mount type=bind,src=$VOLUME,dst=/var/lib/registry,options=rbind:rw \
+         --env REGISTRY_HTTP_TLS_CERTIFICATE=/certs/$REGISTRY_DOMAIN.crt \
+         --env REGISTRY_HTTP_TLS_KEY=/certs/$REGISTRY_DOMAIN.key \
+         --env REGISTRY_HTTP_DEBUG_ADDR=0.0.0.0:5002 \
+         --env REGISTRY_HTTP_DEBUG_PROMETHEUS_ENABLED=true"
 
 # shellcheck disable=SC2086
 if [ -f $config ]; then
     sed -i "s/5000/$1/g" $config
     regArgs="$regArgs \
-    -v $config:/etc/containerd/registry/config.yml"
+    --mount type=bind,src=$config,dst=/etc/containerd/registry/config.yml,options=rbind:rw"
 fi
+echo "regArgs: $regArgs"
 # shellcheck disable=SC2086
 if [ -f $htpasswd ]; then
-    ctr  run $regArgs \
+    ctr run $regArgs \
             -v $htpasswd:/htpasswd \
             -e REGISTRY_AUTH=htpasswd \
             -e REGISTRY_AUTH_HTPASSWD_PATH=/htpasswd \
-            -e REGISTRY_AUTH_HTPASSWD_REALM="Registry Realm" registry:2.7.1 || startRegistry
+            -e REGISTRY_AUTH_HTPASSWD_REALM="Registry Realm" docker.io/library/registry:2.7.1 $container || startRegistry
 else
-    ctr  run $regArgs registry:2.7.1 || startRegistry
+    ctr run $regArgs docker.io/library/registry:2.7.1 $container || startRegistry
 fi
 
 check_registry
