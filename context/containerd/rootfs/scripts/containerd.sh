@@ -24,7 +24,7 @@ mkdir -p "$storage"
 
 # Begin install containerd
 if ! containerd --version; then
-  lsb_dist=$(utils_get_distribution)
+  lsb_dist=$(sed -n 's/^ID=//p' /etc/os-release)
   lsb_dist="$(echo "$lsb_dist" | tr '[:upper:]' '[:lower:]')"
   echo "current system is ${lsb_dist}"
 
