@@ -9,6 +9,9 @@ storage:
     rootdirectory: /var/lib/registry
 http:
   addr: :5000
+  tls:
+    certificate: /certs/sea.hub.crt
+    key: /certs/sea.hub.key
   headers:
     X-Content-Type-Options: [nosniff]
 health:
