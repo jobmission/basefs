@@ -67,6 +67,10 @@ EOF
   sysctl --system
 }
 
+echo "in kubelet-pre-start.sh echo /etc/kubernetes"
+# shellcheck disable=SC2005
+echo "$(ls -l /etc/kubernetes)"
+
 swapoff -a || true
 [[ -f /etc/fstab ]] && sed -i '/\sswap\s/d' /etc/fstab
 iptables -P FORWARD ACCEPT

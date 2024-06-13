@@ -52,6 +52,10 @@ copy_kubelet_service(){
   cp "${scripts_path}"/../etc/10-kubeadm.conf /etc/systemd/system/kubelet.service.d/
 }
 
+echo "in init-kube.sh echo /etc/kubernetes"
+# shellcheck disable=SC2005
+echo "$(ls -l /etc/kubernetes)"
+
 # fix
 if [ -f /etc/kubernetes/kubeadm.yaml ];then
   sudo sed -i '/dpIdleTimeout: 0s/d' /etc/kubernetes/kubeadm.yaml

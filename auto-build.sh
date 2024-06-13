@@ -136,6 +136,8 @@ fi
 
 echo "before build workdir: ${workdir}/context/rootfs/scripts"
 echo "$(ls -l rootfs/scripts)"
+echo "before build workdir: ${workdir}/context/rootfs"
+echo "$(ls -l rootfs)"
 
 echo "$(sealer version)}"
 echo "build name: $buildName"
