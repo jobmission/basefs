@@ -127,6 +127,13 @@ sudo sed -i "s/registry.k8s.io/sea.hub:5000/g" rootfs/etc/kubeadm.yml.tmpl
 pauseImage=$(./"${ARCH}"/bin/kubeadm config images list --config "rootfs/etc/kubeadm.yml" 2>/dev/null | sed "/WARNING/d" | grep pause)
 if [ -f "rootfs/etc/dump-config.toml" ]; then sudo sed -i "s/sea.hub:5000\/pause:3.6/$(echo "$pauseImage" | sed 's/\//\\\//g')/g" rootfs/etc/dump-config.toml; fi
 
+# fix
+if [ -f "rootfs/kubeadm.yaml" ];then
+  sudo sed -i '/dpIdleTimeout: 0s/d' rootfs/kubeadm.yaml
+else
+  echo "rootfs/kubeadm.yaml not exist now!"
+fi
+
 echo "before build workdir: ${workdir}/context/rootfs/scripts"
 echo "$(ls -l rootfs/scripts)"
 

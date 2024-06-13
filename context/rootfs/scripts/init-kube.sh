@@ -52,6 +52,13 @@ copy_kubelet_service(){
   cp "${scripts_path}"/../etc/10-kubeadm.conf /etc/systemd/system/kubelet.service.d/
 }
 
+# fix
+if [ -f /etc/kubernetes/kubeadm.yaml ];then
+  sudo sed -i '/dpIdleTimeout: 0s/d' /etc/kubernetes/kubeadm.yaml
+else
+  echo "/etc/kubernetes/kubeadm.yaml not exist now!"
+fi
+
 disable_firewalld
 copy_bins
 copy_kubelet_service

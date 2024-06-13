@@ -81,10 +81,3 @@ disable_selinux
 systemctl daemon-reload
 systemctl enable containerd.service
 systemctl restart containerd.service
-
-# fix
-if [ -f /etc/kubernetes/kubeadm.yaml ];then
-  sudo sed -i '/dpIdleTimeout: 0s/d' /etc/kubernetes/kubeadm.yaml
-else
-  echo "/etc/kubernetes/kubeadm.yaml not exist now!"
-fi
