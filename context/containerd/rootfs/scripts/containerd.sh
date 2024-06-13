@@ -79,7 +79,7 @@ if ! containerd --version; then
     ;;
   esac
 
-  # install /etc/containerd/config.toml
+  echo "install /etc/containerd/config.toml"
   mkdir -p /etc/containerd
   cp -f "${scripts_path}"/../etc/containerd-config.toml /etc/containerd/config.toml
 fi

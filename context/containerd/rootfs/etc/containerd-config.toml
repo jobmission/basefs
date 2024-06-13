@@ -1,0 +1,7 @@
+disabled_plugins = []
+
+[grpc]
+address = "sea.hub:5000"
+
+[metrics]
+address = "localhost:4727"
