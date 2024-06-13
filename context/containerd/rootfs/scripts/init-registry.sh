@@ -75,8 +75,8 @@ check_registry() {
 load_images
 
 ## rm container if exist.
-if [ "$(ctr task ls -q name=$container)" ]; then
-    ctr tasks kill -s KILL $container
+if [ "$(ctr containers list | grep $container)" ]; then
+    ctr tasks kill -s SIGKILL $container
     ctr containers delete $container
 fi
 
