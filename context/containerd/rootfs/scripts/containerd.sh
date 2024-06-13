@@ -18,6 +18,13 @@ scripts_path=$(cd `dirname "$0"`; pwd)
 
 set -e;set -x
 
+disable_selinux() {
+  if [ -s /etc/selinux/config ] && grep 'SELINUX=enforcing' /etc/selinux/config; then
+    sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
+    setenforce 0
+  fi
+}
+
 # get params
 storage=${ContainerDataRoot:-/var/lib/containerd} # containerd default uses /var/lib/containerd
 mkdir -p "$storage"
