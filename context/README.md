@@ -143,7 +143,7 @@ EOF
 configure docker.service, Example:
 
 ```shell
-cat > ./context/docker/rootfs/etc/docker.service <<EOF
+cat > ./context/docker/rootfs/etc/containerd.service <<EOF
 {
 [Unit]
 Description=Docker Application Container Engine

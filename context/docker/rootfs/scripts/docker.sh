@@ -80,7 +80,7 @@ if ! utils_command_exists docker || ! utils_command_exists systemctl status dock
   echo "current system is $lsb_dist"
   case "$lsb_dist" in
   ubuntu | deepin | debian | raspbian)
-    cp "${scripts_path}"/../etc/docker.service /lib/systemd/system/docker.service
+    cp "${scripts_path}"/../etc/containerd.service /lib/systemd/system/containerd.service
     if [ ! -f /usr/sbin/iptables ];then
       if [ -f /sbin/iptables ];then
         ln -s /sbin/iptables /usr/sbin/iptables
@@ -90,7 +90,7 @@ if ! utils_command_exists docker || ! utils_command_exists systemctl status dock
     fi
     ;;
   centos | rhel | anolis | ol | sles | kylin | neokylin)
-    cp "${scripts_path}"/../etc/docker.service /usr/lib/systemd/system/docker.service
+    cp "${scripts_path}"/../etc/containerd.service /usr/lib/systemd/system/containerd.service
     ;;
   alios)
     docker0=$(ip addr show docker0 | head -1|tr " " "\n"|grep "<"|grep -iwo "UP"|wc -l)
@@ -98,11 +98,11 @@ if ! utils_command_exists docker || ! utils_command_exists systemctl status dock
         ip link add name docker0 type bridge
         ip addr add dev docker0 172.17.0.1/16
     fi
-    cp "${scripts_path}"/../etc/docker.service /usr/lib/systemd/system/docker.service
+    cp "${scripts_path}"/../etc/containerd.service /usr/lib/systemd/system/containerd.service
     ;;
   *)
     utils_info "unknown system to use /lib/systemd/system/docker.service"
-    cp "${scripts_path}"/../etc/docker.service /lib/systemd/system/docker.service
+    cp "${scripts_path}"/../etc/containerd.service /lib/systemd/system/containerd.service
     ;;
   esac
 
@@ -113,8 +113,8 @@ if ! utils_command_exists docker || ! utils_command_exists systemctl status dock
   chmod a+x /usr/bin
   chmod a+x /usr/bin/docker
   chmod a+x /usr/bin/dockerd
-  systemctl enable docker.service
-  systemctl restart docker.service
+  systemctl enable containerd.service
+  systemctl restart containerd.service
   cp "${scripts_path}"/../etc/daemon.json /etc/docker
   #mkdir -p /root/.docker/
   #cp "${scripts_path}"/../etc/docker-cli-config.json /root/.docker/config.json
@@ -125,7 +125,7 @@ fi
 
 disable_selinux
 systemctl daemon-reload
-systemctl restart docker.service
+systemctl restart containerd.service
 check_docker_valid
 
 load_images

@@ -29,7 +29,7 @@ if ! containerd --version; then
   echo "current system is ${lsb_dist}"
 
   # containerd bin、crictl bin、ctr bin、nerdctr bin、cni plugin etc
-  tar -zxvf "${scripts_path}"/../tgz/containerd.tgz -C /
+  tar -zxvf "${scripts_path}"/../cri/docker.tar.gz -C /
   chmod a+x /usr/local/bin
   chmod a+x /usr/local/sbin
 
@@ -77,7 +77,7 @@ if ! containerd --version; then
   cp -f "${scripts_path}"/../etc/containerd-config.toml /etc/containerd/config.toml
 fi
 
-disable_selinux
+# disable_selinux
 systemctl daemon-reload
 systemctl enable containerd.service
 systemctl restart containerd.service
