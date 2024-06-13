@@ -13,7 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-nerdctl stop sealer-registry && nerdctl rmi -f sealer-registry
+container=sealer-registry
+if [ "$(ctr containers list | grep $container)" ]; then
+    ctr tasks kill -s SIGKILL $container
+    ctr containers delete $container
+fi
+
 systemctl stop containerd
 systemctl disable containerd
 systemctl daemon-reload
