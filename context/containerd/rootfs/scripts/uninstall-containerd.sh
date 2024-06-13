@@ -26,6 +26,7 @@ systemctl daemon-reload
 rm -f /usr/bin/conntrack
 rm -f /usr/bin/kubelet-pre-start.sh
 rm -f /usr/bin/containerd
+rm -f /usr/local/bin/containerd
 rm -rf /etc/containerd
 rm -f /usr/bin/containerd-shim
 rm -f /usr/bin/containerd-shim-runc-v2
