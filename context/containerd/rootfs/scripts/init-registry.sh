@@ -15,6 +15,8 @@
 
 set -e
 set -x
+echo "this is init-registry.sh -----------------------------"
+
 # prepare registry storage as directory
 # shellcheck disable=SC2046
 cd $(dirname "$0")
@@ -30,6 +32,8 @@ config="$rootfs/etc/registry_config.yml"
 htpasswd="$rootfs/etc/registry_htpasswd"
 certs_dir="$rootfs/certs"
 image_dir="$rootfs/images"
+
+echo "VOLUME value : $VOLUME"
 
 mkdir -p "$VOLUME" || true
 
