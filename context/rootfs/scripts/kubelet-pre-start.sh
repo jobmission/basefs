@@ -67,7 +67,7 @@ EOF
   sysctl --system
 }
 
-echo "in kubelet-pre-start.sh echo /etc/kubernetes"
+echo "this is kubelet-pre-start.sh -----------------------------"
 # shellcheck disable=SC2005
 echo "$(ls -l /etc/kubernetes)"
 
