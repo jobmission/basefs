@@ -96,6 +96,8 @@ regArgs="--detach
 # shellcheck disable=SC2086
 if [ -f $config ]; then
     sed -i "s/5000/$1/g" $config
+    mkdir -p /etc/docker/registry
+    cp -f $config /etc/docker/registry/config.yml
     regArgs="$regArgs \
     --mount type=bind,src=$config,dst=/etc/docker/registry/config.yml,options=rbind:rw"
 fi
