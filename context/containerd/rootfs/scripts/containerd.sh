@@ -82,7 +82,10 @@ if ! containerd --version; then
   echo "install /etc/containerd/config.toml"
   mkdir -p /etc/containerd
   cp -f "${scripts_path}"/../etc/dump-config.toml /etc/containerd/config.toml
-  cp -f "${scripts_path}"/../etc/nerdctl.toml /etc/nerdctl/nerdctl.toml
+  if [ -f "${scripts_path}/../etc/nerdctl.toml" ];then
+    cp -f "${scripts_path}"/../etc/nerdctl.toml /etc/nerdctl/nerdctl.toml
+  fi
+
 fi
 
 # disable_selinux
