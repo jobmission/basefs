@@ -1,6 +1,9 @@
 version = 2
+[metrics]
+address = "0.0.0.0:5000"
 [plugins]
   [plugins."io.containerd.grpc.v1.cri"]
-    sandbox_image = "sea.hub:5000/pause:3.6"
+    SystemdCgroup = true
+    sandbox_image = "sea.hub:5000/pause:3.9"
     [plugins."io.containerd.grpc.v1.cri".registry]
-      config_path = "/etc/docker/certs.d/"
+      config_path = "/etc/containerd/certs.d/"

@@ -1,4 +1,0 @@
-disabled_plugins = []
-
-[metrics]
-address = "0.0.0.0:5000"
