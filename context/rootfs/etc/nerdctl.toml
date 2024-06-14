@@ -1,2 +1,4 @@
 namespace = "default"
 insecure_registry = true
+cgroup_manager = "systemd"
+insecure_registry = "http://sea.hub:5000"

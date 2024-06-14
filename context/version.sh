@@ -13,7 +13,7 @@ export conntrack_version=${conntrack_version:-"1.4.4"}
 
 export nerdctl_version=${nerdctl_version:-"1.7.6"}
 
-export crictl_version=${crictl_version:-"1.24.1"}
+export crictl_version=${crictl_version:-"1.30.0"}
 
 export containerd_version=${containerd_version:-"1.7.18"}
 

@@ -85,6 +85,7 @@ if [ "$(ctr containers list | grep $container)" ]; then
 fi
 
 regArgs="--detach
+         --net-host  \
          --mount type=bind,src=$certs_dir,dst=/certs,options=rbind:rw \
          --mount type=bind,src=$VOLUME,dst=/var/lib/registry,options=rbind:rw \
          --env REGISTRY_HTTP_TLS_CERTIFICATE=/certs/$REGISTRY_DOMAIN.crt \

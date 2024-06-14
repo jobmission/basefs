@@ -1,6 +1,1 @@
-[plugins]
-  [plugins."io.containerd.grpc.v1.cri"]
-    SystemdCgroup = true
-    sandbox_image = "sea.hub:5000/pause:3.9"
-    [plugins."io.containerd.grpc.v1.cri".registry]
-      config_path = "/etc/containerd/certs.d/"
+version = 2
