@@ -92,7 +92,7 @@ regArgs="--detach
 if [ -f $config ]; then
     sed -i "s/5000/$1/g" $config
     regArgs="$regArgs \
-    --mount type=bind,src=$config,dst=/etc/containerd/registry/config.yml,options=rbind:rw"
+    --mount type=bind,src=$config,dst=/etc/docker/registry/config.yml,options=rbind:rw"
 fi
 echo "regArgs: $regArgs"
 # shellcheck disable=SC2086

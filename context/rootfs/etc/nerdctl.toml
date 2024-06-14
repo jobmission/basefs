@@ -1,0 +1,2 @@
+namespace = "default"
+insecure_registry = true
