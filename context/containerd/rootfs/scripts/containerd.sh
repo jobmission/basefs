@@ -88,16 +88,6 @@ if ! containerd --version; then
     cp -f "${scripts_path}/../etc/nerdctl.toml" /etc/nerdctl/nerdctl.toml
   fi
 
-  if [ -f "${scripts_path}/../etc/10-bridge.conf" ];then
-    mkdir -p /etc/cni/net.d
-    cp -f "${scripts_path}/../etc/10-bridge.conf" /etc/cni/net.d/nerdctl.toml
-  fi
-
-  if [ -f "${scripts_path}/../etc/10-bridge.conf" ];then
-    mkdir -p /etc/cni/net.d
-    cp -f "${scripts_path}/../etc/10-bridge.conf" /etc/cni/net.d/nerdctl.toml
-  fi
-
 fi
 
 # disable_selinux

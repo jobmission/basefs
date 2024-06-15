@@ -15,6 +15,8 @@
 
 set -e
 set -x
+echo "this is init-registry.sh -----------------------------"
+
 # prepare registry storage as directory
 # shellcheck disable=SC2046
 cd $(dirname "$0")
@@ -31,6 +33,8 @@ htpasswd="$rootfs/etc/registry_htpasswd"
 certs_dir="$rootfs/certs"
 image_dir="$rootfs/images"
 
+echo "VOLUME value : $VOLUME"
+
 mkdir -p "$VOLUME" || true
 
 # shellcheck disable=SC2106
@@ -39,7 +43,7 @@ startRegistry() {
     while (( n <= 3 ))
     do
         echo "attempt to start registry"
-        (docker start $container && break) || (( n < 3))
+        (ctr task start $container && break) || (( n < 3))
         (( n++ ))
         sleep 3
     done
@@ -50,7 +54,7 @@ for image in "$image_dir"/*
 do
  if [ -f "${image}" ]
  then
-  docker load -q -i "${image}"
+  ctr image import "${image}"
  fi
 done
 }
@@ -59,8 +63,8 @@ check_registry() {
     n=1
     while (( n <= 3 ))
     do
-        registry_status=$(docker inspect --format '{{json .State.Status}}' sealer-registry)
-        if [[ "$registry_status" == \"running\" ]]; then
+        registry_status=$(ctr tasks ls | grep $container | awk '{print $3}')
+        if [[ "$registry_status" == "RUNNING" ]]; then
             break
         fi
         if [[ $n -eq 3 ]]; then
@@ -75,35 +79,38 @@ check_registry() {
 load_images
 
 ## rm container if exist.
-if [ "$(docker ps -aq -f name=$container)" ]; then
-    docker rm -f $container
+if [ "$(ctr containers list | grep $container)" ]; then
+    ctr tasks kill -s SIGKILL $container
+    ctr containers delete $container
 fi
 
-regArgs="-d --restart=always \
---net=host \
---name $container \
--v $certs_dir:/certs \
--v $VOLUME:/var/lib/registry \
--e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/$REGISTRY_DOMAIN.crt \
--e REGISTRY_HTTP_TLS_KEY=/certs/$REGISTRY_DOMAIN.key \
--e REGISTRY_HTTP_DEBUG_ADDR=0.0.0.0:5002 \
--e REGISTRY_HTTP_DEBUG_PROMETHEUS_ENABLED=true"
+regArgs="--detach
+         --net-host  \
+         --mount type=bind,src=$certs_dir,dst=/certs,options=rbind:rw \
+         --mount type=bind,src=$VOLUME,dst=/var/lib/registry,options=rbind:rw \
+         --env REGISTRY_HTTP_TLS_CERTIFICATE=/certs/$REGISTRY_DOMAIN.crt \
+         --env REGISTRY_HTTP_TLS_KEY=/certs/$REGISTRY_DOMAIN.key \
+         --env REGISTRY_HTTP_DEBUG_ADDR=0.0.0.0:5002 \
+         --env REGISTRY_HTTP_DEBUG_PROMETHEUS_ENABLED=true"
 
 # shellcheck disable=SC2086
 if [ -f $config ]; then
     sed -i "s/5000/$1/g" $config
+    mkdir -p /etc/docker/registry
+    cp -f $config /etc/docker/registry/config.yml
     regArgs="$regArgs \
-    -v $config:/etc/docker/registry/config.yml"
+    --mount type=bind,src=$config,dst=/etc/docker/registry/config.yml,options=rbind:rw"
 fi
+echo "regArgs: $regArgs"
 # shellcheck disable=SC2086
 if [ -f $htpasswd ]; then
-    docker run $regArgs \
+    ctr run $regArgs \
             -v $htpasswd:/htpasswd \
             -e REGISTRY_AUTH=htpasswd \
             -e REGISTRY_AUTH_HTPASSWD_PATH=/htpasswd \
-            -e REGISTRY_AUTH_HTPASSWD_REALM="Registry Realm" registry:2.7.1 || startRegistry
+            -e REGISTRY_AUTH_HTPASSWD_REALM="Registry Realm" docker.io/library/registry:2.7.1 $container || startRegistry
 else
-    docker run $regArgs registry:2.7.1 || startRegistry
+    ctr run $regArgs docker.io/library/registry:2.7.1 $container || startRegistry
 fi
 
 check_registry
