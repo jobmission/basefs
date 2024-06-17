@@ -1,33 +1,19 @@
 #!/bin/bash
-# Copyright © 2021 Alibaba Group Holding Ltd.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
 
 container=sealer-registry
-if [ "$(ctr containers list | grep $container)" ]; then
-    ctr tasks kill -s SIGKILL $container
-    ctr containers delete $container
-fi
+docker rm -f $container
+systemctl stop docker
 
 systemctl stop containerd
-systemctl disable containerd
+# systemctl disable containerd
 systemctl daemon-reload
+
 
 rm -f /usr/bin/conntrack
 rm -f /usr/bin/kubelet-pre-start.sh
-rm -f /usr/bin/containerd
-rm -f /usr/local/bin/containerd
-rm -rf /etc/containerd
+#rm -f /usr/bin/containerd
+#rm -f /usr/local/bin/containerd
+#rm -rf /etc/containerd
 rm -rf /etc/docker/registry
 rm -f /usr/bin/containerd-shim
 rm -f /usr/bin/containerd-shim-runc-v2
@@ -46,7 +32,7 @@ rm -f /usr/bin/seautil
 
 rm -f /etc/crictl.yaml
 rm -rf /etc/ld.so.conf.d/containerd.conf
-rm -rf /var/lib/containerd
+#rm -rf /var/lib/containerd
 rm -rf /var/lib/nerdctl
-rm -rf /opt/containerd
+#rm -rf /opt/containerd
 
