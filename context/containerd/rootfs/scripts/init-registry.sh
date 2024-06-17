@@ -31,6 +31,9 @@ htpasswd="$rootfs/etc/registry_htpasswd"
 certs_dir="$rootfs/certs"
 image_dir="$rootfs/images"
 
+mkdir -p /etc/docker/certs.d
+cp -f "$certs_dir/$REGISTRY_DOMAIN.crt" "/etc/docker/certs.d/"
+
 mkdir -p "$VOLUME" || true
 
 # shellcheck disable=SC2106
