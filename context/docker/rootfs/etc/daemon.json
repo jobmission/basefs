@@ -17,5 +17,6 @@
   "exec-opts": [
     "native.cgroupdriver=systemd"
   ],
-  "data-root": "/var/lib/docker"
+  "data-root": "/var/lib/docker",
+  "insecure-registries":["0.0.0.0:5000","sea.hub:5000"]
 }
