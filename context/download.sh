@@ -77,8 +77,10 @@ else
   cri_tarball_arm64="cri-containerd-${containerd_version}-linux-arm64.tar.gz"
   cri_tarball_amd64_url="${containerd_url}/releases/download/v${containerd_version}/${cri_tarball_amd64}"
   cri_tarball_arm64_url="${containerd_url}/releases/download/v${containerd_version}/${cri_tarball_arm64}"
-  registry_tarball_amd64="nerdctl-amd64-registry-image.tar.gz"
-  registry_tarball_arm64="nerdctl-arm64-registry-image.tar.gz"
+  #registry_tarball_amd64="nerdctl-amd64-registry-image.tar.gz"
+  #registry_tarball_arm64="nerdctl-arm64-registry-image.tar.gz"
+  registry_tarball_amd64="docker-amd64-registry-image.tar.gz"
+  registry_tarball_arm64="docker-arm64-registry-image.tar.gz"
   echo "download containerd version ${containerd_version}"
 fi
 
