@@ -17,6 +17,7 @@
 scripts_path=$(cd `dirname "$0"`; pwd)
 
 set -e;set -x
+echo "this is containerd.sh -----------------------------"
 
 disable_selinux() {
   if [ -s /etc/selinux/config ] && grep 'SELINUX=enforcing' /etc/selinux/config; then
@@ -78,16 +79,15 @@ if ! containerd --version; then
     cp -f "${scripts_path}"/../etc/containerd.service /etc/systemd/system/containerd.service
     ;;
   esac
+fi
 
-  echo "install /etc/containerd/config.toml"
-  mkdir -p /etc/containerd
-  cp -f "${scripts_path}"/../etc/dump-config.toml /etc/containerd/config.toml
+echo "install /etc/containerd/config.toml"
+mkdir -p /etc/containerd
+cp -f "${scripts_path}"/../etc/dump-config.toml /etc/containerd/config.toml
 
-  if [ -f "${scripts_path}/../etc/nerdctl.toml" ];then
-    mkdir -p /etc/nerdctl
-    cp -f "${scripts_path}/../etc/nerdctl.toml" /etc/nerdctl/nerdctl.toml
-  fi
-
+if [ -f "${scripts_path}/../etc/nerdctl.toml" ];then
+  mkdir -p /etc/nerdctl
+  cp -f "${scripts_path}/../etc/nerdctl.toml" /etc/nerdctl/nerdctl.toml
 fi
 
 # disable_selinux
