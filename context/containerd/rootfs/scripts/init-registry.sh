@@ -31,8 +31,10 @@ htpasswd="$rootfs/etc/registry_htpasswd"
 certs_dir="$rootfs/certs"
 image_dir="$rootfs/images"
 
-mkdir -p /etc/docker/certs.d
-cp -f "$certs_dir/$REGISTRY_DOMAIN.crt" "/etc/docker/certs.d/"
+REGISTRY_CERT_FOLDER=/etc/docker/certs.d/$REGISTRY_DOMAIN:$REGISTRY_PORT
+
+mkdir -p $REGISTRY_CERT_FOLDER
+cp -f "$certs_dir/$REGISTRY_DOMAIN.crt" "$REGISTRY_CERT_FOLDER/ca.crt"
 
 mkdir -p "$VOLUME" || true
 

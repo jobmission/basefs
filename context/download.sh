@@ -115,7 +115,7 @@ echo "download cri with ${cri} : ${cri_tarball_amd64_url}"
 wget -q "${cri_tarball_amd64_url}" && mv "${cri_tarball_amd64}" "amd64/cri/docker.tar.gz"
 wget -q "${cri_tarball_arm64_url}" && mv "${cri_tarball_arm64}" "arm64/cri/docker.tar.gz"
 
-echo "download distribution image ${registry_tarball_amd64}"
+echo "download registry image ${registry_tarball_amd64}"
 wget -q "${registry_tarball_amd64_url}" && mv "${registry_tarball_amd64}" "amd64/images"
 wget -q "${registry_tarball_arm64_url}" && mv "${registry_tarball_arm64}" "arm64/images"
 

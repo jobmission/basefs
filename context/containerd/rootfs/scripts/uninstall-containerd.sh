@@ -2,9 +2,9 @@
 
 container=sealer-registry
 docker rm -f $container
-systemctl stop docker
 
-systemctl stop containerd
+return
+#systemctl stop containerd
 # systemctl disable containerd
 systemctl daemon-reload
 
