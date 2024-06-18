@@ -1,12 +1,3 @@
-apiVersion: kubeadm.k8s.io/v1beta2
-kind: InitConfiguration
-localAPIEndpoint:
-  bindPort: 6443
-nodeRegistration:
-  criSocket: /var/run/dockershim.sock
-  taints: null
-
----
 apiServer:
   extraArgs:
     audit-log-format: json
