@@ -1,3 +1,13 @@
+apiVersion: kubeadm.k8s.io/v1beta3
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: 172.16.0.181
+  bindPort: 6443
+nodeRegistration:
+  criSocket: unix:///run/containerd/containerd.sock
+  taints: null
+
+---
 apiServer:
   certSANs:
   extraArgs:
