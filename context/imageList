@@ -1,8 +1,8 @@
 docker.io/sealerio/lvscare:v1.1.3-beta.8
-quay.io/tigera/operator:v1.32.9
+quay.io/tigera/operator:v1.34.0
 calico/node:v3.28.0
-calico/pod2daemon-flexvol:v3.27.3
-calico/cni:v3.27.3
-calico/kube-controllers:v3.27.3
-calico/typha:v3.27.3
-calico/apiserver:v3.27.3
+calico/pod2daemon-flexvol:v3.28.0
+calico/cni:v3.28.0
+calico/kube-controllers:v3.28.0
+calico/typha:v3.28.0
+calico/apiserver:v3.28.0
