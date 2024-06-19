@@ -37,7 +37,6 @@ apiVersion: kubeadm.k8s.io/v1beta2
 controlPlaneEndpoint: apiserver.cluster.local:6443
 controllerManager:
   extraArgs:
-    experimental-cluster-signing-duration: 876000h
   extraVolumes:
   - hostPath: /etc/localtime
     mountPath: /etc/localtime
