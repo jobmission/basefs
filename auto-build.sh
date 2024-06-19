@@ -98,6 +98,8 @@ echo "final cri: ${cri}, kubernetes version: ${k8s_version}, build image name: $
 kubeadmApiVersion=$( (version_compare "$k8s_version" "v1.23.0" && echo 'kubeadm.k8s.io\/v1beta3') || (version_compare "$k8s_version" "v1.15.0" && echo 'kubeadm.k8s.io\/v1beta2') ||
   (version_compare "$k8s_version" "v1.13.0" && echo 'kubeadm.k8s.io\/v1beta1') || (echo "Version must be greater than 1.13: ${k8s_version}" && exit 1))
 
+echo "kubeadmApiVersion: ${kubeadmApiVersion}"
+
 workdir="$(mktemp -d auto-build-XXXXX)" && sudo cp -r context "${workdir}" && cd "${workdir}/context" && sudo cp -rf "${cri}"/* .
 
 echo "after make workdir: ${workdir}/context/rootfs/scripts"
@@ -136,10 +138,14 @@ else
   echo "rootfs/kubeadm.yaml not exist now!"
 fi
 
-echo "before build workdir: ${workdir}/context/rootfs/scripts"
-echo "$(ls -l rootfs/scripts)"
 echo "before build workdir: ${workdir}/context/rootfs"
 echo "$(ls -l rootfs)"
+
+echo "before build workdir: ${workdir}/context/rootfs/scripts"
+echo "$(ls -l rootfs/scripts)"
+
+echo "before build workdir: ${workdir}/context/rootfs/etc"
+echo "$(ls -l rootfs/etc)"
 
 echo "$(sealer version)}"
 echo "build name: $buildName"
