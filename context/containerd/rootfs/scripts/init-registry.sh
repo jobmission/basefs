@@ -112,8 +112,12 @@ echo "rootfs: $rootfs"
 echo "$(ls -l $rootfs)"
 
 if [ -f $certs_dir ]; then
-  REGISTRY_CERT_FOLDER=/etc/docker/certs.d/$REGISTRY_DOMAIN:$REGISTRY_PORT
-  mkdir -p $REGISTRY_CERT_FOLDER
-  cp -f "$certs_dir/$REGISTRY_DOMAIN.crt" "$REGISTRY_CERT_FOLDER/ca.crt"
+  echo "certs_dir: $certs_dir"
+  echo "$(ls -l $certs_dir)"
+  if [ -f "$certs_dir/$REGISTRY_DOMAIN.crt" ]; then
+    REGISTRY_CERT_FOLDER=/etc/docker/certs.d/$REGISTRY_DOMAIN:$REGISTRY_PORT
+    mkdir -p $REGISTRY_CERT_FOLDER
+    cp -f "$certs_dir/$REGISTRY_DOMAIN.crt" "$REGISTRY_CERT_FOLDER/ca.crt"
+  fi
 fi
 
