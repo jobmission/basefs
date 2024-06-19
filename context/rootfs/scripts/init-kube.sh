@@ -58,7 +58,9 @@ echo "$(ls -l /etc/kubernetes)"
 
 # fix
 if [ -f /etc/kubernetes/kubeadm.yaml ];then
+  echo "fix bugs in kubeadm.yaml"
   sudo sed -i '/dpIdleTimeout: 0s/d' /etc/kubernetes/kubeadm.yaml
+  sudo sed -i '/feature-gates: TTLAfterFinished=true,EphemeralContainers=true/d' /etc/kubernetes/kubeadm.yaml
 else
   echo "/etc/kubernetes/kubeadm.yaml not exist now!"
 fi

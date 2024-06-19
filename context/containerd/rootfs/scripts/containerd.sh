@@ -90,6 +90,10 @@ if [ -f "${scripts_path}/../etc/nerdctl.toml" ];then
   cp -f "${scripts_path}/../etc/nerdctl.toml" /etc/nerdctl/nerdctl.toml
 fi
 
+if command -v crictl >/dev/null 2>&1; then
+  crictl config runtime-endpoint unix:///var/run/containerd/containerd.sock
+fi
+
 # disable_selinux
 systemctl daemon-reload
 systemctl enable containerd.service
