@@ -19,7 +19,7 @@ apiServer:
     audit-policy-file: /etc/kubernetes/audit-policy.yml
     enable-aggregator-routing: "true"
     etcd-servers: https://172.16.0.181:2379
-    feature-gates: TTLAfterFinished=true,EphemeralContainers=true
+    feature-gates: EphemeralContainers=true
   extraVolumes:
   - hostPath: /etc/kubernetes
     mountPath: /etc/kubernetes
@@ -39,7 +39,7 @@ controlPlaneEndpoint: apiserver.cluster.local:6443
 controllerManager:
   extraArgs:
     experimental-cluster-signing-duration: 876000h
-    feature-gates: TTLAfterFinished=true,EphemeralContainers=true
+    feature-gates: EphemeralContainers=true
   extraVolumes:
   - hostPath: /etc/localtime
     mountPath: /etc/localtime
@@ -62,7 +62,7 @@ networking:
   serviceSubnet: 10.96.0.0/22
 scheduler:
   extraArgs:
-    feature-gates: TTLAfterFinished=true,EphemeralContainers=true
+    feature-gates: EphemeralContainers=true
   extraVolumes:
   - hostPath: /etc/localtime
     mountPath: /etc/localtime

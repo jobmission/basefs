@@ -16,7 +16,7 @@ apiServer:
     audit-log-path: /var/log/kubernetes/audit.log
     audit-policy-file: /etc/kubernetes/audit-policy.yml
     enable-aggregator-routing: "true"
-    feature-gates: TTLAfterFinished=true,EphemeralContainers=true
+    feature-gates: EphemeralContainers=true
   extraVolumes:
     - hostPath: /etc/kubernetes
       mountPath: /etc/kubernetes
@@ -35,7 +35,7 @@ apiVersion: kubeadm.k8s.io/v1beta2
 controllerManager:
   extraArgs:
     experimental-cluster-signing-duration: 876000h
-    feature-gates: TTLAfterFinished=true,EphemeralContainers=true
+    feature-gates: EphemeralContainers=true
   extraVolumes:
     - hostPath: /etc/localtime
       mountPath: /etc/localtime
@@ -58,7 +58,7 @@ networking:
   serviceSubnet: 10.96.0.0/22
 scheduler:
   extraArgs:
-    feature-gates: TTLAfterFinished=true,EphemeralContainers=true
+    feature-gates: EphemeralContainers=true
   extraVolumes:
     - hostPath: /etc/localtime
       mountPath: /etc/localtime
