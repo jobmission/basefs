@@ -31,13 +31,6 @@ htpasswd="$rootfs/etc/registry_htpasswd"
 certs_dir="$rootfs/certs"
 image_dir="$rootfs/images"
 
-echo "rootfs: $certs_dir"
-echo "$(ls -l $rootfs)"
-
-REGISTRY_CERT_FOLDER=/etc/docker/certs.d/$REGISTRY_DOMAIN:$REGISTRY_PORT
-mkdir -p $REGISTRY_CERT_FOLDER
-cp -f "$certs_dir/$REGISTRY_DOMAIN.crt" "$REGISTRY_CERT_FOLDER/ca.crt"
-
 mkdir -p "$VOLUME" || true
 
 # shellcheck disable=SC2106
@@ -114,3 +107,13 @@ else
 fi
 
 check_registry
+
+echo "rootfs: $rootfs"
+echo "$(ls -l $rootfs)"
+
+if [ -f $certs_dir ]; then
+  REGISTRY_CERT_FOLDER=/etc/docker/certs.d/$REGISTRY_DOMAIN:$REGISTRY_PORT
+  mkdir -p $REGISTRY_CERT_FOLDER
+  cp -f "$certs_dir/$REGISTRY_DOMAIN.crt" "$REGISTRY_CERT_FOLDER/ca.crt"
+fi
+
