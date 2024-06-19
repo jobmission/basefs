@@ -7,9 +7,15 @@ docker rm -f $container
 # systemctl disable containerd
 systemctl daemon-reload
 
-rm -f /etc/containerd/certs.d
-rm -f /etc/containerd/config.toml
-rm -f /etc/docker/certs.d
+if [ -d /etc/containerd/certs.d ]; then
+  rm -f /etc/containerd/certs.d
+fi
+if [ -d /etc/docker/certs.d ]; then
+  rm -f /etc/docker/certs.d
+fi
+if [ -f /etc/containerd/config.toml ]; then
+  rm -f /etc/containerd/config.toml
+fi
 
 #rm -f /usr/bin/conntrack
 #rm -f /usr/bin/kubelet-pre-start.sh
