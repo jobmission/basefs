@@ -10,7 +10,7 @@ disable_selinux() {
     sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
     setenforce 0
   fi
-  if which "getenforce" >/dev/null 2>&1; then
+  if command -v getenforce >/dev/null 2>&1; then
       if ! getenforce | grep Disabled;then
         setenforce 0 || true
       fi

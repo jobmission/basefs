@@ -111,7 +111,7 @@ check_registry
 echo "rootfs: $rootfs"
 echo "$(ls -l $rootfs)"
 
-if [ -f $certs_dir ]; then
+if [ -d $certs_dir ]; then
   echo "certs_dir: $certs_dir"
   echo "$(ls -l $certs_dir)"
   if [ -f "$certs_dir/$REGISTRY_DOMAIN.crt" ]; then
