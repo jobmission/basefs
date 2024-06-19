@@ -8,10 +8,10 @@ docker rm -f $container
 systemctl daemon-reload
 
 if [ -d /etc/containerd/certs.d ]; then
-  rm -f /etc/containerd/certs.d
+  rm -rf /etc/containerd/certs.d
 fi
 if [ -d /etc/docker/certs.d ]; then
-  rm -f /etc/docker/certs.d
+  rm -rf /etc/docker/certs.d
 fi
 if [ -f /etc/containerd/config.toml ]; then
   rm -f /etc/containerd/config.toml
