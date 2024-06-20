@@ -2,7 +2,7 @@
 
 echo "this is in uninstall-container.sh"
 container=sealer-registry
-ehco " rm container $container"
+echo " rm container $container"
 docker rm -f $container
 
 #systemctl stop containerd
