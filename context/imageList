@@ -8,3 +8,4 @@ calico/typha:v3.28.0
 calico/apiserver:v3.28.0
 calico/node-driver-registrar:v3.28.0
 calico/csi:v3.28.0
+docker.io/library/busybox:1
