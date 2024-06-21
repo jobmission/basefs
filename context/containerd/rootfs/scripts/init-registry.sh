@@ -31,6 +31,7 @@ htpasswd="$rootfs/etc/registry_htpasswd"
 certs_dir="$rootfs/certs"
 image_dir="$rootfs/images"
 
+echo "registry VOLUME:$VOLUME"
 mkdir -p "$VOLUME" || true
 
 # shellcheck disable=SC2106
