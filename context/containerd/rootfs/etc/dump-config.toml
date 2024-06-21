@@ -5,9 +5,6 @@ disabled_plugins = []
     sandbox_image = "sea.hub:5000/pause:3.9"
     [plugins."io.containerd.grpc.v1.cri".registry]
       config_path = "/etc/docker/certs.d/"
-      [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
-        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
-          endpoint=["https://sea.hub:5000"]
     [plugins."io.containerd.grpc.v1.cri".containerd]
       [plugins."io.containerd.grpc.v1.cri".containerd.runtimes]
         [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
